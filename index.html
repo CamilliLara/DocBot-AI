@@ -174,11 +174,23 @@
             let respostaBot = "";
 
             // Regra inicial de triagem
-            if (sintomaNormalizado.includes("plano") || sintomaNormalizado.includes("convenio") || sintomaNormalizado.includes("unimed")) {
-    respostaBot = "[CONVÊNIO ACEITO] Encaminhado para rede credenciada. Copagamento: R$ 35,00";
-} else {
-    respostaBot = "[TRIAGEM PADRÃO] Encaminhado para consulta geral. Valor: R$ 150,00";
-}
+
+            // Regra de emergência - Ticket #101
+            if (sintomaNormalizado.includes("dor no peito") ||
+                sintomaNormalizado.includes("falta de ar")) {
+                respostaBot = "[EMERGÊNCIA VERMELHA] Dirija-se ao pronto-socorro. Custo: R$ 0,00";
+
+            // Regra de convênio - Ticket #102
+            } else if (sintomaNormalizado.includes("plano") ||
+                       sintomaNormalizado.includes("convenio") ||
+                       sintomaNormalizado.includes("convênio") ||
+                       sintomaNormalizado.includes("unimed")) {
+                respostaBot = "[CONVÊNIO ACEITO] Encaminhado para rede credenciada. Copagamento: R$ 35,00";
+
+            } else {
+                respostaBot = "[TRIAGEM PADRÃO] Encaminhado para consulta geral. Valor: R$ 150,00";
+            }
+
             return respostaBot;
         }
 
